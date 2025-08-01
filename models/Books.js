@@ -10,11 +10,6 @@ const Books = new mongoose.Schema({
         maxlength: [100, "the max length of the title is 100"],
         trim: true
     },
-    id:{
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        maxlength: [100,"id is required"],
-    },
     description:{
         type: String,
         maxlength: [1000, "Provide a description within 1000 limit"],
@@ -43,7 +38,7 @@ const Books = new mongoose.Schema({
     customCategory:{
         type: String,
         trim: true,
-        require : function(){
+        required : function(){
             return this.category === 'Other'
         }
     },
@@ -56,7 +51,7 @@ const Books = new mongoose.Schema({
     image:{
         type: String,
         validate: {
-             function(v){
+          validator:   function(v){
             if(!v) return true
             return URLregex.test(v)
         },
@@ -76,5 +71,5 @@ const Books = new mongoose.Schema({
 
 
 },{timestamps:true})
-const BooksModel = mongoose.model("Books", Books)
-module.exports = BooksModel
+module.exports = mongoose.model("Books", Books)
+

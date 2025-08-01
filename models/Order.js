@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const orderItemSchema = new mongoose.Schema({
   book: {
     type: mongoose.Schema.Types.ObjectId,
