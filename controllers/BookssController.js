@@ -138,6 +138,25 @@ const removeItem = async (req, res) => {
 };
 
 
-  
+const updateBookByIsbn = async (req, res) => {
+  const { isbn } = req.params;  
+  const updates = req.body;    
 
-module.exports = {getAllBooks, addOneBook, removeItem}
+  try {
+    const updatedBook = await Books.findOneAndUpdate(
+      { isbn: isbn },          
+      { $set: updates },        
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedBook) {
+      return res.status(404).json({ msg: 'Book not found' });
+    }
+
+    res.json(updatedBook);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+}
+module.exports = {getAllBooks, addOneBook, removeItem, updateBookByIsbn}

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const currentYear  = new Date().getFullYear()
-const genres = ['Fiction', 'Non-Fiction', 'Biography', 'Science', 'Romance', 'Comedy', 'RomCom', 'Ideologies', 'Philosphy', 'Sports', 'Drama', 'Technology', 'Other']
+const genres = ['Fiction', 'Non-Fiction', 'Biography', 'Science', 'Romance', 'Comedy', 'RomCom', 'Ideologies', 'Philosphy', 'Sports', 'Drama', 'Technology', 'Business', 'Other']
 const URLregex =  /^(https?:\/\/)?([\w\-]+\.)+[\w\-]+(\/[\w\-./?%&=]*)?$/i
 const Books = new mongoose.Schema({
 
