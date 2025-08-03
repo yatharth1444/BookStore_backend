@@ -8,11 +8,11 @@ const LoginUser = async (req, res) => {
         const errors = []
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if(!email || !emailRegex.test(email)){
-            errors.push({message: `please include a valid email`, param: "email"})
+            errors.push({msg: `please include a valid email`, param: "email"})
 
         }
         if(!password || password.trim() === ''){
-            errors.push({message: `please enter a password`, param:"password"})
+            errors.push({msg: `please enter a password`, param:"password"})
 
         }
         if(errors.length > 0){
@@ -22,14 +22,14 @@ const LoginUser = async (req, res) => {
        
         const UserToLogin = await User.findOne({email})
         if(!UserToLogin){
-           return res.status(404).json({
-              errors:[{message: `invalid credentials`, param: "email"}]
+           return res.status(400).json({
+              errors:[{msg: `invalid credentials`, param: "email"}]
             })
         }
         const isMatch = await bcrypt.compare(password, UserToLogin.passwordHash)
         if(!isMatch){
             return res.status(400).json({
-                errors:[{message: `invalid credentials`, param: "password"}]
+                errors:[{msg: `invalid credentials`, param: "password"}]
             })
         }
         const payload ={
@@ -59,7 +59,7 @@ const LoginUser = async (req, res) => {
 
         )
     } catch (error) {
-        console.error(error.message)
+        console.error(error.msg)
         res.status(500).json({
             message: `Server error`,
             success: false

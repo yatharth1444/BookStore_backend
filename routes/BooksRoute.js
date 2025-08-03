@@ -1,4 +1,5 @@
 const express = require('express')
+const isAdmin = require('../middleware/isAdmin')
 const {
        getAllBooks, 
        addOneBook,
@@ -9,6 +10,6 @@ const {
 const router = express.Router()
 router.get('/Allbooks', getAllBooks )
 router.post('/addnewBook', addOneBook)
-router.delete('/bookDelete', removeItem)
-router.put('/update/:isbn', updateBookByIsbn)
+router.delete('/bookDelete',isAdmin, removeItem)
+router.put('/update/:isbn',isAdmin, updateBookByIsbn)
 module.exports = router

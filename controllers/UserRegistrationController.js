@@ -140,7 +140,7 @@ const Registeruser = async (req, res) => {
           console.error(err);
           return res.status(500).send('token error');
         }
-        res.json({ token });
+        res.status(201).json({ token });
       }
     );
   } catch (err) {

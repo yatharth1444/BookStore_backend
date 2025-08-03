@@ -1,10 +1,12 @@
 require("dotenv").config()
+const cors = require('cors')
 const connectDb = require('./database/db')
 const express = require('express')
 const BooksRoutes = require('./routes/BooksRoute')
 const UserRoutes = require('./routes/UserRoutes')
 const app = express()
 connectDb()
+app.use(cors())
 
 app.use(express.json())
 
