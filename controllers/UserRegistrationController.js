@@ -66,40 +66,29 @@ const Users = require('../models/User');
 const Registeruser = async (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
 
-  // Manual validation:
   const errors = [];
 
-  // name is required and non-empty string
   if (!name || name.trim() === '') {
     errors.push({ msg: 'Name is required', param: 'name' });
   }
-
-  // email validation with regex (simple pattern)
-  // Basic regex for email validation:
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email || !emailRegex.test(email)) {
     errors.push({ msg: 'Please include a valid email', param: 'email' });
   }
-
-  // password minimum length 6 characters
   if (!password || password.length < 6) {
     errors.push({ msg: 'Password must be at least 6 characters', param: 'password' });
   }
-
-  // confirmPassword non-empty and matches password
   if (!confirmPassword) {
     errors.push({ msg: 'Please confirm your password', param: 'confirmPassword' });
   } else if (confirmPassword !== password) {
     errors.push({ msg: 'Passwords do not match', param: 'confirmPassword' });
   }
 
-  // If any validation errors, return 400 with error details
   if (errors.length > 0) {
     return res.status(400).json({ errors });
   }
 
   try {
-    // Check if user already exists
     let user = await Users.findOne({ email });
     if (user) {
       return res.status(400).json({
@@ -112,7 +101,6 @@ const Registeruser = async (req, res) => {
       });
     }
 
-    // Hash password
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -123,11 +111,11 @@ const Registeruser = async (req, res) => {
     });
 
     await user.save();
-
-    // Create JWT payload and sign token
+                                       
     const payload = {
       user: {
         id: user.id,
+        role: user.role,
       },
     };
 
@@ -148,5 +136,4 @@ const Registeruser = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
-
 module.exports = Registeruser;
