@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const currentYear  = new Date().getFullYear()
-const genres = ['Fiction', 'Non-Fiction', 'Biography', 'Science', 'Romance', 'Comedy', 'RomCom', 'Ideologies', 'Philosphy', 'Sports', 'Drama', 'Technology', 'Business', 'Other']
+const genres = ['Fiction', 'Non-Fiction', 'Biography', 'Science', 'Romance', 'Comedy', 'RomCom', 'Ideologies', 'Philosphy', 'Sports', 'Drama', 'Technology', 'Business','Self help', 'murder mystery', 'Other']
 const URLregex =  /^(https?:\/\/)?([\w\-]+\.)+[\w\-]+(\/[\w\-./?%&=]*)?$/i
 const Books = new mongoose.Schema({
 
@@ -9,6 +9,10 @@ const Books = new mongoose.Schema({
         required: [true,"title is required"],
         maxlength: [100, "the max length of the title is 100"],
         trim: true
+    },
+    author: {
+        type: String,
+        trim: true,
     },
     description:{
         type: String,

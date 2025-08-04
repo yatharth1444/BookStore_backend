@@ -33,8 +33,11 @@ const LoginUser = async (req, res) => {
             })
         }
         const payload ={
-            UserToLogin:{
-               id: UserToLogin.id
+            user:{
+               id: UserToLogin._id,
+                name: UserToLogin.name,
+                email: UserToLogin.email,
+                role: UserToLogin.role,
             }
         }
         jwt.sign(
@@ -48,12 +51,7 @@ const LoginUser = async (req, res) => {
                 }
                 res.json({
                   token,
-                  user:{
-                    id: UserToLogin.id,
-                    name: UserToLogin.name,
-                    email: UserToLogin.email,
-                    role: UserToLogin.role,
-                  },
+                  user:payload.user,
                 })
             }
 

@@ -4,6 +4,7 @@ const Books = require('../models/Books');
 const addToCart = async (req, res) => {
   try {
     const userId = req.user.id;
+    console.log("authnticated user info ", req.user)
     const { book: bookId, quantity } = req.body;
 
     if (!bookId) {
@@ -37,9 +38,11 @@ const addToCart = async (req, res) => {
     await cart.save();
 
     const populatedCart = await cart
-      .populate('user', 'name email role')
-      .populate('items.book', 'title author price image description')
-      .execPopulate();
+      .populate([
+        { path: 'user', select: 'name email role'},
+        { path: 'items.book', select: 'title author price image description'} 
+      ])
+      
 
     res.status(200).json({
       msg: 'Book added to cart successfully',
